@@ -79,7 +79,7 @@ func ArchiveProduk(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Data gagal di Archieve", "data": produk})
 		return
 	} else {
-		c.JSON(http.StatusOK, gin.H{"message": "Data berhasil di Archieve", "data": produk})
+		c.JSON(http.StatusOK, gin.H{"message": "Data berhasil di Archieve"})
 	}
 }
 
@@ -92,9 +92,9 @@ func RestoreProduk(c *gin.Context) {
 	if err := model.DB.Model(&produk).Where("id = ?", id).Update("produk_tampil", 1).Error; err != nil {
 		fmt.Println(err.Error())
 
-		c.JSON(http.StatusBadRequest, gin.H{"message": "Data gagal di Restore", "data": produk})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Data gagal di Restore"})
 		return
 	} else {
-		c.JSON(http.StatusOK, gin.H{"message": "Data berhasil di Restore", "data": produk})
+		c.JSON(http.StatusOK, gin.H{"message": "Data berhasil di Restore"})
 	}
 }

@@ -4,8 +4,10 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hanifhahn/bakul/middlewares"
 	"github.com/hanifhahn/bakul/model"
 	"github.com/hanifhahn/bakul/routes/produkcontroller"
+	"github.com/hanifhahn/bakul/routes/usercontroller"
 )
 
 func main() {
@@ -17,6 +19,14 @@ func main() {
 
 	r.PATCH("/archiveProduk/:id", produkcontroller.ArchiveProduk)
 	r.PATCH("/restoreProduk/:id", produkcontroller.RestoreProduk)
+
+	public := r.Group("/api")
+	public.POST("/register", usercontroller.Register)
+	public.POST("/login", usercontroller.Login)
+
+	protected := r.Group("/api/admin")
+	protected.Use(middlewares.JwtAuthMiddleware())
+	protected.GET("/user", usercontroller.CurrentUser)
 
 	model.ConnectDB()
 
